@@ -30,6 +30,8 @@
 
 .main-header__nav {
   flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .menu {
@@ -74,6 +76,7 @@
   pointer-events: none;
   transition: opacity 160ms ease, transform 160ms ease;
   z-index: 200;
+  list-style: none;
 }
 
 .menu__item--has-dropdown:focus-within .dropdown,

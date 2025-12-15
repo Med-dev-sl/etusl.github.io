@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './MainHeader.css';
 
 function MainHeader() {
@@ -7,7 +8,7 @@ function MainHeader() {
       <div className="main-header__inner">
         <nav className="main-header__nav" aria-label="Main Navigation">
           <ul className="menu">
-            <li className="menu__item"><a href="#">Home</a></li>
+            <li className="menu__item"><Link to="/">Home</Link></li>
 
             <li className="menu__item menu__item--has-dropdown">
               <a href="#">About</a>
