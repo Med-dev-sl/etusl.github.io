@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './MainHeader.css';
 
@@ -6,6 +6,21 @@ function MainHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleMobile = () => setMobileOpen((s) => !s);
+
+  // lock body scroll while mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      // save current overflow to restore later
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev || '';
+      };
+    }
+    // ensure overflow restored when mobileOpen false
+    document.body.style.overflow = '';
+    return undefined;
+  }, [mobileOpen]);
 
   return (
     <header className="main-header">
