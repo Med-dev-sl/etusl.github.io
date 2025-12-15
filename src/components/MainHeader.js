@@ -5,10 +5,6 @@ function MainHeader() {
   return (
     <header className="main-header">
       <div className="main-header__inner">
-        <div className="main-header__logo">
-          <div className="logo-placeholder" aria-hidden>LOGO</div>
-        </div>
-
         <nav className="main-header__nav" aria-label="Main Navigation">
           <ul className="menu">
             <li className="menu__item"><a href="#">Home</a></li>
@@ -47,6 +43,11 @@ function MainHeader() {
               </ul>
             </li>
 
+            {/* centered logo placed between Admissions and Research */}
+            <li className="menu__logo" aria-hidden>
+              <img src="logo512.png" alt="" className="logo-image" />
+            </li>
+
             <li className="menu__item menu__item--has-dropdown">
               <a href="#">Research</a>
               <ul className="dropdown">
@@ -74,8 +75,6 @@ function MainHeader() {
             </li>
           </ul>
         </nav>
-
-        <div className="main-header__spacer" />
       </div>
     </header>
   );
