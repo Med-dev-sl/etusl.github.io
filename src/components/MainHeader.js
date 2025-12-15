@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './MainHeader.css';
 
 function MainHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const toggleMobile = () => setMobileOpen((s) => !s);
+
   return (
     <header className="main-header">
       <div className="main-header__inner">
+        <button
+          className={`menu__hamburger ${mobileOpen ? 'is-open' : ''}`}
+          onClick={toggleMobile}
+          aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
+        >
+          <span className="hamburger__box">
+            <span className="hamburger__inner" />
+          </span>
+        </button>
+
         <nav className="main-header__nav" aria-label="Main Navigation">
           <ul className="menu">
             <li className="menu__item"><Link to="/">Home</Link></li>
@@ -76,6 +91,23 @@ function MainHeader() {
             </li>
           </ul>
         </nav>
+
+        {/* Mobile slide-out menu */}
+        <div className={`mobile-nav ${mobileOpen ? 'mobile-nav--open' : ''}`} role="dialog" aria-hidden={!mobileOpen}>
+          <div className="mobile-nav__inner">
+            <button className="mobile-nav__close" onClick={toggleMobile} aria-label="Close menu">×</button>
+            <ul className="mobile-menu">
+              <li><Link to="/" onClick={() => setMobileOpen(false)}>Home</Link></li>
+              <li><a href="#" onClick={() => setMobileOpen(false)}>About</a></li>
+              <li><a href="#" onClick={() => setMobileOpen(false)}>Academics</a></li>
+              <li><a href="#" onClick={() => setMobileOpen(false)}>Admissions</a></li>
+              <li className="mobile-menu__logo"><img src="logo512.png" alt="" className="logo-image"/></li>
+              <li><a href="#" onClick={() => setMobileOpen(false)}>Research</a></li>
+              <li><a href="#" onClick={() => setMobileOpen(false)}>News &amp; Events</a></li>
+              <li><a href="#" onClick={() => setMobileOpen(false)}>Quick Links</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </header>
   );

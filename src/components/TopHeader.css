@@ -1,6 +1,8 @@
 .top-header {
   background: #062a6f; /* deep blue */
   color: #ffffff;
+  /* approximate height used by mobile menu positioning */
+  --top-header-height: 56px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   font-size: 14px;
 }
@@ -53,11 +55,33 @@
 }
 
 @media (max-width: 640px) {
+  .top-header {
+    background: #ffffff;
+    color: #062a6f;
+  }
+
   .top-header__inner {
     padding: 10px;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
   }
-  .top-header__left, .top-header__right {
-    display: none; /* hide less important items on very small screens */
+
+  .top-header__left,
+  .top-header__right,
+  .top-header__center {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .top-header__icon {
+    color: #062a6f; /* deep blue icons on mobile */
+  }
+
+  .top-header__link {
+    color: #062a6f; /* deep blue links on mobile */
   }
 }
 

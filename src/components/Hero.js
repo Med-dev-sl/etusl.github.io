@@ -56,7 +56,7 @@ function Hero() {
             className={`hero-slide ${index === currentSlide ? 'hero-slide--active' : ''}`}
             style={{ backgroundImage: `url(${slide.image})` }}
           >
-            <div className="hero-slide__overlay" style={{ backgroundColor: `${slide.color}cc` }} />
+            <div className="hero-slide__overlay" />
             <div className="hero-slide__content">
               <h1 className="hero-slide__title">{slide.title}</h1>
               <p className="hero-slide__subtitle">{slide.subtitle}</p>
