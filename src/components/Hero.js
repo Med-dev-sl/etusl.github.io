@@ -60,6 +60,28 @@ function Hero() {
     };
   }, []);
 
+  // fetch recent events (limit to 4)
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    let mounted = true;
+    fetch('http://127.0.0.1:8000/api/events/?ordering=-created_at')
+      .then((res) => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then((data) => {
+        if (mounted) setEvents((data && Array.isArray(data) ? data.slice(0, 4) : []));
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error('Failed fetching events:', err);
+        if (mounted) setEvents([]);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const goToSlide = (index) => {
     setCurrentSlide(index);
   };
@@ -113,15 +135,38 @@ function Hero() {
 
       {announcements && announcements.length > 0 && (
         <div className="announcement-bar" aria-live="polite">
-          <div className="announcement-marquee">
-            {announcements.map((a) => (
-              <div className="announcement-item" key={a.id}>
-                <strong>{a.title}:</strong>&nbsp;{a.body}
-              </div>
-            ))}
+          <div className="announcement-single">
+            <strong className="announcement-single__title">{announcements[0].title}</strong>
+            <span className="announcement-single__body">{announcements[0].body}</span>
           </div>
         </div>
-        )}
+      )}
+
+      {events && events.length > 0 && (
+        <section className="events-section" aria-label="Upcoming events">
+          <div className="events-container">
+            {events.map((e) => (
+              <article className="event-card" key={e.id}>
+                <div className="event-photo" style={{ backgroundImage: e.photo ? `url(${e.photo})` : 'none', backgroundColor: '#f0f0f0' }} />
+                <div className="event-content">
+                  <h3 className="event-title">{e.name}</h3>
+                  <p className="event-desc">{e.description ? (e.description.length > 120 ? `${e.description.slice(0, 117)}…` : e.description) : ''}</p>
+                  <div className="event-meta">
+                    <span className="event-meta-item">
+                      <svg className="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                      <span className="meta-text">{e.location || 'TBA'}</span>
+                    </span>
+                    <span className="event-meta-item">
+                      <svg className="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V9h14v9zM7 11h5v5H7z"/></svg>
+                      <span className="meta-text">{new Date(e.created_at).toLocaleDateString()}</span>
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
       </>
     );
 }

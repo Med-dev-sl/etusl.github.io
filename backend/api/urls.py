@@ -4,6 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'announcements', views.AnnouncementViewSet, basename='announcement')
+router.register(r'events', views.EventViewSet, basename='event')
 
 urlpatterns = [
     path('status/', views.status, name='status'),
