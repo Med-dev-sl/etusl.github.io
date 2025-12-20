@@ -1,0 +1,56 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% trans "Log in" %}{% endblock %} | {{ site_title|default:_("Django site admin") }}</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'admin_custom/admin.css' %}">
+  </head>
+  <body class="admin-login-page">
+    <div class="login-wrapper">
+      <div class="login-card">
+        <div class="login-left" style="background-image: url('{% static 'admin_custom/logo512.png' %}');">
+          <div class="login-brand">
+            <img src="{% static 'admin_custom/logo512.png' %}" alt="logo" class="login-logo"/>
+          </div>
+          <h1 class="login-title">{{ site_header|default:_('Administration') }}</h1>
+          <p class="login-subtitle">{% trans "Welcome — manage your site content and configuration." %}</p>
+        </div>
+
+        <div class="login-right">
+          <form method="post" action="{% url 'admin:login' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+              <p class="errornote">{% trans "Please correct the errors below." %}</p>
+            {% endif %}
+
+            <div class="form-row">
+              {{ form.username.label_tag }}
+              {{ form.username }}
+            </div>
+
+            <div class="form-row">
+              {{ form.password.label_tag }}
+              {{ form.password }}
+            </div>
+
+            <div class="form-actions">
+              <input type="submit" value="{% trans 'Log in' %}" class="button primary" />
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+          </form>
+
+          <div class="login-footer">
+            <p class="muted">&copy; {{ now|date:"Y" }} {{ site_title|default:_('Site') }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

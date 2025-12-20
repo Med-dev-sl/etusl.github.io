@@ -1,0 +1,92 @@
+/* Admin custom login styles: Merriweather headings, Open Sans & Lato body */
+:root{
+  --deep-blue: #062a6f;
+  --accent: #1a5490;
+  --muted: #6b7280;
+}
+
+html,body{height:100%;}
+body.admin-login-page{
+  margin:0;
+  font-family: 'Open Sans', 'Lato', sans-serif;
+  background: linear-gradient(180deg, #f6f8fb 0%, #ffffff 60%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.login-wrapper{
+  width:100%;
+  max-width:960px;
+  padding:28px;
+}
+
+
+.login-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), #ffffff);
+  border-radius:14px;
+  box-shadow: 0 12px 40px rgba(6,42,111,0.12);
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  padding:0;
+  gap:0;
+  overflow:hidden;
+}
+
+
+.login-left{
+  background: linear-gradient(180deg, var(--deep-blue), #0b3b8a);
+  color: #fff;
+  min-width:360px;
+  max-width:460px;
+  padding:40px 32px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.login-brand{display:flex;align-items:center;justify-content:center;padding-top:4px}
+.login-logo{width:140px;height:auto;border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,0.16)}
+
+.login-title{
+  font-family: 'Merriweather', serif;
+  font-weight:700;
+  color:#fff;
+  margin:12px 0 6px 0;
+  font-size:32px;
+}
+
+.login-subtitle{color:rgba(255,255,255,0.9);margin:0;font-size:15px;max-width:320px}
+
+.login-right{padding:36px 48px;display:flex;flex-direction:column;justify-content:center;flex:1}
+
+.form-row{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.form-row input[type="text"], .form-row input[type="password"]{
+  padding:12px 14px;border-radius:8px;border:1px solid #e6e9ef;font-size:15px;font-family:inherit;outline:none;transition:box-shadow .18s ease,border-color .18s ease
+}
+.form-row input:focus{box-shadow:0 8px 24px rgba(26,84,144,0.09);border-color:var(--accent)}
+
+.form-actions{width:100%;display:flex;justify-content:flex-end;margin-top:10px}
+.button.primary{background:linear-gradient(90deg,var(--deep-blue),var(--accent));color:#fff;padding:10px 20px;border-radius:999px;border:none;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(6,42,111,0.14)}
+.button.primary:hover{transform:translateY(-2px)}
+
+.login-footer{margin-top:6px;color:var(--muted);font-size:13px}
+
+.errornote{color:#b00020;background:#fff6f6;padding:10px;border:1px solid #f1c0c0;border-radius:6px}
+
+@media (max-width:900px){
+  .login-card{flex-direction:column}
+  .login-left{max-width:100%;min-width:0;padding:20px}
+  .login-right{padding:20px}
+  .login-card{border-radius:12px}
+  .login-wrapper{padding:12px}
+  .login-title{font-size:22px}
+}
+
+@media (max-width:420px){
+  .login-logo{width:110px}
+  .login-title{font-size:20px}
+}
