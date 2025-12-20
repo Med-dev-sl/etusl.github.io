@@ -35,6 +35,31 @@ function Hero() {
     return () => clearInterval(timer);
   }, [slides.length]);
 
+  // fetch active announcements from backend
+  const [announcements, setAnnouncements] = useState([]);
+  useEffect(() => {
+    let mounted = true;
+    // In development the frontend server runs on a different port (3000).
+    // Request the backend directly so fetch reaches the Django server.
+    fetch('http://127.0.0.1:8000/api/announcements/active/')
+      .then((res) => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then((data) => {
+        if (mounted) setAnnouncements(data || []);
+      })
+      .catch((err) => {
+        // log for debugging in browser console
+        // eslint-disable-next-line no-console
+        console.error('Failed fetching announcements:', err);
+        if (mounted) setAnnouncements([]);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const goToSlide = (index) => {
     setCurrentSlide(index);
   };
@@ -48,6 +73,7 @@ function Hero() {
   };
 
   return (
+    <>
     <div className="hero-carousel">
       <div className="hero-carousel__slides">
         {slides.map((slide, index) => (
@@ -84,7 +110,20 @@ function Hero() {
         ))}
       </div>
     </div>
-  );
+
+      {announcements && announcements.length > 0 && (
+        <div className="announcement-bar" aria-live="polite">
+          <div className="announcement-marquee">
+            {announcements.map((a) => (
+              <div className="announcement-item" key={a.id}>
+                <strong>{a.title}:</strong>&nbsp;{a.body}
+              </div>
+            ))}
+          </div>
+        </div>
+        )}
+      </>
+    );
 }
 
 export default Hero;
