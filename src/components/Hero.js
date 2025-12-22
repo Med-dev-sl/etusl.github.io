@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
+import About from './About';
 
 function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -69,6 +70,8 @@ function Hero() {
           </div>
         </div>
       )}
+
+      <About />
 
       <section className="events-section" aria-label="Upcoming events">
         <div className="events-header">
