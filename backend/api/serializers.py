@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Announcement, Event
+from .models import Announcement, Event, AboutUniversity
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
@@ -13,4 +13,10 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'name', 'description', 'location', 'photo', 'event_date', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+class AboutUniversitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutUniversity
+        fields = ['id', 'heading', 'description', 'image', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']

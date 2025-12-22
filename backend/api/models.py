@@ -30,3 +30,17 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+class AboutUniversity(models.Model):
+    heading = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to='about/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'About University'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.heading

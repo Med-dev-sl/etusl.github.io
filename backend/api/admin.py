@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Announcement, Event
+from .models import Announcement, Event, AboutUniversity
 
 
 @admin.register(Announcement)
@@ -16,3 +16,15 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'event_date', 'created_at')
     search_fields = ('name', 'description', 'location')
     readonly_fields = ('created_at', 'updated_at')
+
+
+@admin.register(AboutUniversity)
+class AboutUniversityAdmin(admin.ModelAdmin):
+    list_display = ('heading', 'created_at')
+    search_fields = ('heading', 'description')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Content', {'fields': ('heading', 'description', 'image')}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )
+

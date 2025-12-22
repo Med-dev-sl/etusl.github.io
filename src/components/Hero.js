@@ -93,7 +93,7 @@ function Hero() {
                 <h3 className="event-title">{e.name}</h3>
                 <p className="event-desc">{e.description ? (e.description.length > 120 ? `${e.description.slice(0, 117)}…` : e.description) : ''}</p>
                 <div className="event-meta">
-                  <span className="event-meta-item"><strong>Location:</strong>&nbsp;<span className="meta-text">{e.location || 'TBA'}</span></span>
+                  <span className="event-meta-item"><svg className="event-meta-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg><span className="meta-text">{e.location || 'TBA'}</span></span>
                 </div>
               </div>
             </article>
@@ -106,3 +106,5 @@ function Hero() {
 
 export default Hero;
         
+
+
