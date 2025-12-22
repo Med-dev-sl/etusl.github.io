@@ -13,6 +13,6 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'created_at')
+    list_display = ('name', 'location', 'event_date', 'created_at')
     search_fields = ('name', 'description', 'location')
     readonly_fields = ('created_at', 'updated_at')
