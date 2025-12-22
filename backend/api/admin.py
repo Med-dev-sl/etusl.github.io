@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Announcement, Event, AboutUniversity
+from .models import Announcement, Event, AboutUniversity, Faculty
 
 
 @admin.register(Announcement)
@@ -28,3 +28,12 @@ class AboutUniversityAdmin(admin.ModelAdmin):
         ('Timestamps', {'fields': ('created_at', 'updated_at')}),
     )
 
+@admin.register(Faculty)
+class FacultyAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created_at')
+    search_fields = ('name', 'description')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Faculty Information', {'fields': ('name', 'description')}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )

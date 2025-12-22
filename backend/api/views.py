@@ -3,8 +3,8 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Announcement, Event, AboutUniversity
-from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer
+from .models import Announcement, Event, AboutUniversity, Faculty
+from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer, FacultySerializer
 
 
 def status(request):
@@ -39,4 +39,10 @@ class AboutUniversityViewSet(viewsets.ModelViewSet):
     """API endpoint for about university information."""
     queryset = AboutUniversity.objects.all()
     serializer_class = AboutUniversitySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class FacultyViewSet(viewsets.ModelViewSet):
+    """API endpoint for faculties."""
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

@@ -39,13 +39,24 @@
 .about-image-wrapper {
   position: relative;
   height: 450px;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(6, 42, 111, 0.15),
               0 0 0 1px rgba(6, 42, 111, 0.05);
   animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   opacity: 0;
   animation-delay: 0.2s;
+  /* Unique shape effect - skew frame */
+  clip-path: polygon(
+    0% 0%,
+    95% 0%,
+    100% 5%,
+    100% 95%,
+    95% 100%,
+    5% 100%,
+    0% 95%,
+    0% 5%
+  );
 }
 
 .about-image {
@@ -56,7 +67,7 @@
 }
 
 .about-image-wrapper:hover .about-image {
-  transform: scale(1.05);
+  transform: scale(1.05) rotate(0.5deg);
 }
 
 .about-image-overlay {
@@ -69,31 +80,62 @@
   pointer-events: none;
 }
 
-/* Shape effect - geometric accent */
+/* Unique geometric border effect */
+.about-image-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(135deg, #062a6f 0%, #0d47a1 50%, transparent 100%);
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0.15;
+  clip-path: polygon(
+    0% 2%,
+    98% 0%,
+    100% 3%,
+    100% 98%,
+    98% 100%,
+    2% 100%,
+    0% 98%,
+    0% 2%
+  );
+}
+
+/* Dynamic floating accent - right side */
 .about-image-wrapper::after {
   content: '';
   position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 100px;
-  height: 100px;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
   background: linear-gradient(135deg, #062a6f 0%, #0d47a1 100%);
-  border-radius: 12px;
-  opacity: 0.1;
-  z-index: -1;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  opacity: 0.08;
+  z-index: 0;
+  animation: rotateShape 20s linear infinite;
+}
+
+/* Left accent corner */
+.about-image-wrapper {
+  position: relative;
 }
 
 .about-image-wrapper::before {
   content: '';
   position: absolute;
-  bottom: -10px;
-  left: -10px;
-  width: 80px;
-  height: 80px;
-  border: 2px solid #062a6f;
-  border-radius: 8px;
-  opacity: 0.1;
-  z-index: -1;
+  bottom: -15px;
+  left: -15px;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #062a6f;
+  border-radius: 0;
+  opacity: 0.08;
+  z-index: 0;
+  transform: rotate(45deg);
 }
 
 /* ===============================
@@ -221,6 +263,15 @@
   }
 }
 
+@keyframes rotateShape {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ===============================
    TABLET RESPONSIVE (980px)
    =============================== */
@@ -237,6 +288,13 @@
 
   .about-image-wrapper {
     height: 380px;
+  }
+
+  .about-image-wrapper::after {
+    width: 100px;
+    height: 100px;
+    top: -15px;
+    right: -15px;
   }
 
   .about-title {
@@ -267,6 +325,13 @@
     border-radius: 10px;
     box-shadow: 0 12px 40px rgba(6, 42, 111, 0.1),
                 0 0 0 1px rgba(6, 42, 111, 0.03);
+  }
+
+  .about-image-wrapper::after {
+    width: 80px;
+    height: 80px;
+    top: -12px;
+    right: -12px;
   }
 
   .about-title {
@@ -312,6 +377,13 @@
     border-radius: 8px;
   }
 
+  .about-image-wrapper::after {
+    width: 60px;
+    height: 60px;
+    top: -10px;
+    right: -10px;
+  }
+
   .about-title {
     font-size: 24px;
     margin-bottom: 10px;
@@ -352,6 +424,13 @@
 
   .about-image-wrapper {
     height: 220px;
+  }
+
+  .about-image-wrapper::after {
+    width: 50px;
+    height: 50px;
+    top: -8px;
+    right: -8px;
   }
 
   .about-title {

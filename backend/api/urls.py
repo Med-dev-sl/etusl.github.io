@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register(r'announcements', views.AnnouncementViewSet, basename='announcement')
 router.register(r'events', views.EventViewSet, basename='event')
 router.register(r'aboutuniversity', views.AboutUniversityViewSet, basename='aboutuniversity')
+router.register(r'faculties', views.FacultyViewSet, basename='faculty')
 
 urlpatterns = [
     path('status/', views.status, name='status'),
