@@ -3,8 +3,8 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection
-from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer, FacultySerializer, NewsSerializer, StrategicPlanSerializer, StrategicPlanSectionSerializer
+from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection, FooterSection, FooterLink
+from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer, FacultySerializer, NewsSerializer, StrategicPlanSerializer, StrategicPlanSectionSerializer, FooterSectionSerializer, FooterLinkSerializer
 
 
 def status(request):
@@ -66,4 +66,18 @@ class StrategicPlanSectionViewSet(viewsets.ModelViewSet):
     """API endpoint for sections — allows admin to create/edit sections directly if needed."""
     queryset = StrategicPlanSection.objects.all()
     serializer_class = StrategicPlanSectionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class FooterSectionViewSet(viewsets.ModelViewSet):
+    """API endpoint for footer sections with nested links."""
+    queryset = FooterSection.objects.all()
+    serializer_class = FooterSectionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class FooterLinkViewSet(viewsets.ModelViewSet):
+    """API endpoint for footer links — allows admin to manage links directly if needed."""
+    queryset = FooterLink.objects.all()
+    serializer_class = FooterLinkSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

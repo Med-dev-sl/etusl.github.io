@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection
+from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection, FooterSection, FooterLink
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcement
-        fields = ['id', 'title', 'body', 'active', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'body', 'active', 'is_featured', 'date', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
 
 
@@ -48,4 +48,20 @@ class StrategicPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = StrategicPlan
         fields = ['id', 'title', 'summary', 'main_image', 'sections', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class FooterLinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FooterLink
+        fields = ['id', 'label', 'url', 'order', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+class FooterSectionSerializer(serializers.ModelSerializer):
+    links = FooterLinkSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = FooterSection
+        fields = ['id', 'title', 'links', 'order', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']

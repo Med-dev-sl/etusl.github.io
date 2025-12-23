@@ -1,14 +1,18 @@
 from django.contrib import admin
-from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection
+from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection, FooterSection, FooterLink
 
 
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'active', 'created_at')
-    list_filter = ('active',)
+    list_display = ('title', 'active', 'is_featured', 'date', 'created_at')
+    list_filter = ('active', 'is_featured')
     search_fields = ('title', 'body')
     ordering = ('-created_at',)
     readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Content', {'fields': ('title', 'body', 'date', 'active', 'is_featured')}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )
 
 
 @admin.register(Event)
@@ -80,3 +84,32 @@ class StrategicPlanAdmin(admin.ModelAdmin):
         return 'No image'
     main_image_preview.allow_tags = True
     main_image_preview.short_description = 'Main Image Preview'
+
+
+class FooterLinkInline(admin.TabularInline):
+    model = FooterLink
+    extra = 1
+    fields = ('label', 'url', 'order')
+    ordering = ('order',)
+
+
+@admin.register(FooterSection)
+class FooterSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'created_at')
+    search_fields = ('title',)
+    readonly_fields = ('created_at', 'updated_at')
+    inlines = [FooterLinkInline]
+    fieldsets = (
+        ('Content', {'fields': ('title', 'order')}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )
+    ordering = ('order',)
+
+
+@admin.register(FooterLink)
+class FooterLinkAdmin(admin.ModelAdmin):
+    list_display = ('label', 'section', 'order', 'created_at')
+    list_filter = ('section',)
+    search_fields = ('label', 'url')
+    readonly_fields = ('created_at',)
+    ordering = ('section', 'order')

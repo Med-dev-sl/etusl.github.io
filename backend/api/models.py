@@ -5,6 +5,9 @@ class Announcement(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField()
     active = models.BooleanField(default=True)
+    # mark announcement to appear as a featured link in the sidebar
+    is_featured = models.BooleanField(default=False)
+    date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -119,3 +122,36 @@ class StrategicPlanSection(models.Model):
 
     def __str__(self):
         return f"{self.plan.title} — {self.heading}"
+
+
+class FooterSection(models.Model):
+    """Represents a column/section in the footer (e.g., Colleges, Quick-Links, Admissions, Alumni)."""
+    title = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0, help_text='Lower numbers appear first')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'Footer Section'
+        verbose_name_plural = 'Footer Sections'
+
+    def __str__(self):
+        return self.title
+
+
+class FooterLink(models.Model):
+    """A link within a footer section."""
+    section = models.ForeignKey(FooterSection, related_name='links', on_delete=models.CASCADE)
+    label = models.CharField(max_length=255)
+    url = models.URLField()
+    order = models.PositiveIntegerField(default=0, help_text='Lower numbers appear first')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'Footer Link'
+        verbose_name_plural = 'Footer Links'
+
+    def __str__(self):
+        return f"{self.section.title} — {self.label}"

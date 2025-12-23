@@ -10,6 +10,8 @@ router.register(r'faculties', views.FacultyViewSet, basename='faculty')
 router.register(r'news', views.NewsViewSet, basename='news')
 router.register(r'strategic-plans', views.StrategicPlanViewSet, basename='strategicplan')
 router.register(r'strategic-plan-sections', views.StrategicPlanSectionViewSet, basename='strategicplansection')
+router.register(r'footer-sections', views.FooterSectionViewSet, basename='footersection')
+router.register(r'footer-links', views.FooterLinkViewSet, basename='footerlink')
 
 urlpatterns = [
     path('status/', views.status, name='status'),

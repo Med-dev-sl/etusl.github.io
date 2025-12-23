@@ -88,10 +88,16 @@ function Hero() {
       </div>
 
       {announcements && announcements.length > 0 && (
-        <div className="announcement-bar" aria-live="polite">
+        <div className="announcement-bar" aria-live="polite" aria-atomic="true">
           <div className="announcement-single">
             <strong className="announcement-single__title">{announcements[0].title}</strong>
-            <span className="announcement-single__body">{announcements[0].body}</span>
+            <div className="announcement-marquee" role="region" aria-label={announcements[0].title}>
+              <div className="announcement-marquee__track">
+                <span className="announcement-single__body">{announcements[0].body}</span>
+                <span className="announcement-marquee__sep">&nbsp; • &nbsp;</span>
+                <span className="announcement-single__body">{announcements[0].body}</span>
+              </div>
+            </div>
           </div>
         </div>
       )}

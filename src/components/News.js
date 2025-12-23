@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './News.css';
+import Announcements from './Announcements';
 
 function News() {
   const [news, setNews] = useState([]);
@@ -87,6 +88,9 @@ function News() {
           </div>
         </section>
       )}
+
+      {/* Announcements + Featured Links section */}
+      <Announcements />
     </>
   );
 }
