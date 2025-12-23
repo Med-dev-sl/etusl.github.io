@@ -22,17 +22,19 @@ export default function Footer() {
         {/* Logo & Contact Info */}
         <div className="footer-section footer-logo-section">
           <div className="footer-logo">
-            <div className="logo-placeholder">🎓</div>
+            <img src="/logo512.png" alt="University logo" className="footer-logo-img" />
             <div className="footer-org-name">
               <div className="org-title">EASTERN TECHNICAL</div>
               <div className="org-title">UNIVERSITY</div>
             </div>
           </div>
           <div className="footer-contact">
-            <p>+233-(0)302-213820</p>
-            <p>+233-(0)302-213850</p>
-            <p>pad@ug.edu.gh</p>
-            <p>P. O Box LG 25 Legon-Accra</p>
+            <p>+232 (78) 231363</p>
+            <p>+232 (76) 339387</p>
+            <p>registrar@etusl.edu.sl</p>
+            <p>P. O. Box ETUSL 25</p>
+            <p>Combema Road, Kenema Sierra Leone</p>
+
           </div>
         </div>
 

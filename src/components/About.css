@@ -21,6 +21,8 @@
   pointer-events: none;
 }
 
+/* (Background image is applied inline in the Overview component to avoid webpack URL resolution) */
+
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -447,5 +449,402 @@
   .about-accent {
     width: 80px;
     height: 80px;
+  }
+}
+
+/* ===============================
+   OVERVIEW SECTION STYLES
+   =============================== */
+
+.overview-loading,
+.overview-error,
+.overview-empty {
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  background: #f8f9fa;
+}
+
+.overview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Profile Section with Brief + Statistics */
+.overview-profile {
+  padding: 80px 20px;
+  background: #f8f9fa;
+}
+
+.overview-profile .overview-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.profile-brief {
+  padding: 20px 0;
+}
+
+.profile-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #062a6f;
+  margin-bottom: 20px;
+}
+
+.profile-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #2c3e50;
+  text-align: justify;
+}
+
+.profile-text p {
+  margin-bottom: 15px;
+}
+
+.profile-statistics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 42px;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Campuses Section */
+.overview-campuses {
+  padding: 80px 20px;
+  background: white;
+}
+
+.overview-campuses .overview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #062a6f;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.campuses-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.campus-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.campus-card:hover {
+  transform: translateY(-8px);
+}
+
+.campus-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+}
+
+.campus-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.campus-card:hover .campus-image {
+  transform: scale(1.08);
+}
+
+.campus-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  display: flex;
+  align-items: flex-end;
+  height: 120px;
+}
+
+.campus-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.campus-description {
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Content Section */
+.overview-content {
+  padding: 60px 20px;
+  background: white;
+  border-top: 1px solid #e9ecef;
+}
+
+.overview-content .overview-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.content-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #2c3e50;
+  text-align: justify;
+}
+
+.content-text p {
+  margin-bottom: 20px;
+}
+
+.content-text ul,
+.content-text ol {
+  margin-bottom: 20px;
+  padding-left: 30px;
+}
+
+.content-text li {
+  margin-bottom: 10px;
+}
+
+/* Gallery Section */
+.overview-gallery {
+  padding: 80px 20px;
+  background: #f8f9fa;
+}
+
+.overview-gallery .overview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.gallery-item {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+.gallery-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-caption {
+  padding: 12px;
+  font-size: 13px;
+  color: #2c3e50;
+  text-align: center;
+  background: white;
+  margin: 0;
+}
+
+/* ===============================
+   RESPONSIVE OVERVIEW
+   =============================== */
+
+@media (max-width: 980px) {
+  .overview-profile .overview-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .campuses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-statistics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .campus-image-wrapper {
+    height: 300px;
+  }
+}
+
+@media (max-width: 720px) {
+  .overview-profile {
+    padding: 60px 16px;
+  }
+
+  .profile-title {
+    font-size: 24px;
+  }
+
+  .profile-text {
+    font-size: 14px;
+  }
+
+  .profile-statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 36px;
+  }
+
+  .overview-campuses {
+    padding: 60px 16px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .campuses-grid {
+    gap: 20px;
+  }
+
+  .campus-image-wrapper {
+    height: 250px;
+  }
+
+  .campus-overlay {
+    padding: 20px;
+    height: 100px;
+  }
+
+  .campus-name {
+    font-size: 22px;
+  }
+
+  .campus-description {
+    padding: 15px;
+    font-size: 13px;
+  }
+
+  .overview-content {
+    padding: 40px 16px;
+  }
+
+  .content-text {
+    font-size: 14px;
+  }
+
+  .overview-gallery {
+    padding: 60px 16px;
+  }
+
+  .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overview-profile {
+    padding: 40px 14px;
+  }
+
+  .profile-title {
+    font-size: 20px;
+  }
+
+  .profile-statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 32px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .campuses-grid {
+    gap: 20px;
+  }
+
+  .campus-image-wrapper {
+    height: 220px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .campus-overlay {
+    padding: 15px;
+    height: 90px;
+  }
+
+  .campus-name {
+    font-size: 18px;
+  }
+
+  .overview-content {
+    padding: 30px 14px;
+  }
+
+  .images-grid {
+    grid-template-columns: 1fr;
   }
 }

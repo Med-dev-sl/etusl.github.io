@@ -18,12 +18,54 @@ html, body {
   overflow-x: hidden; /* prevent horizontal scrolling */
 }
 
-body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+:root{
+  --scroll-track: #0f2433;
+  --scroll-thumb: #f6d55c; /* butter yellow */
+  --scroll-thumb-hover: #f39c12;
 }
+
+/* Smooth scrolling for in-page navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for WebKit browsers (Chrome, Edge, Safari) */
 body::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  width: 12px;
+  height: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--scroll-thumb), var(--scroll-thumb-hover));
+  border-radius: 10px;
+  border: 3px solid transparent; /* add padding effect */
+  background-clip: padding-box;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  transform: translateZ(0);
+  filter: brightness(0.95);
+}
+
+/* Firefox scrollbar styling */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
+/* Respect user's reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  body::-webkit-scrollbar-thumb {
+    transition: none !important;
+  }
 }
 
 code {

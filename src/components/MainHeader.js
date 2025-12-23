@@ -41,15 +41,15 @@ function MainHeader() {
             <li className="menu__item"><Link to="/">Home</Link></li>
 
             <li className="menu__item menu__item--has-dropdown">
-              <a href="#">About</a>
+              <span>About</span>
               <ul className="dropdown">
-                <li><a href="#">Overview</a></li>
-                <li><a href="#">History</a></li>
-                <li><a href="#">Vision &amp; Mission</a></li>
-                <li><a href="#">Leadership &amp; Directorates</a></li>
-                <li><a href="#">Affiliates &amp; Partners</a></li>
-                <li><a href="#">Strategic Plan</a></li>
-                <li><a href="#">ETU Policies</a></li>
+                <li><Link to="/about/overview">Overview</Link></li>
+                <li><Link to="/about/history">History</Link></li>
+                <li><Link to="/about/vision-mission">Vision &amp; Mission</Link></li>
+                <li><Link to="/about/leadership">Leadership &amp; Directorates</Link></li>
+                <li><Link to="/about/affiliates">Affiliates &amp; Partners</Link></li>
+                <li><Link to="/about/strategic-plan">Strategic Plan</Link></li>
+                <li><Link to="/about/policies">ETU Policies</Link></li>
               </ul>
             </li>
 
@@ -113,7 +113,7 @@ function MainHeader() {
             <button className="mobile-nav__close" onClick={toggleMobile} aria-label="Close menu">×</button>
             <ul className="mobile-menu">
               <li><Link to="/" onClick={() => setMobileOpen(false)}>Home</Link></li>
-              <li><a href="#" onClick={() => setMobileOpen(false)}>About</a></li>
+              <li><Link to="/about/overview" onClick={() => setMobileOpen(false)}>About</Link></li>
               <li><a href="#" onClick={() => setMobileOpen(false)}>Academics</a></li>
               <li><a href="#" onClick={() => setMobileOpen(false)}>Admissions</a></li>
               <li className="mobile-menu__logo"><img src="logo512.png" alt="" className="logo-image"/></li>

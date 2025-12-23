@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection, FooterSection, FooterLink
+from .models import AboutSection, AboutOverview, AboutImage, Campus, Statistic
 
 
 @admin.register(Announcement)
@@ -89,7 +90,7 @@ class StrategicPlanAdmin(admin.ModelAdmin):
 class FooterLinkInline(admin.TabularInline):
     model = FooterLink
     extra = 1
-    fields = ('label', 'url', 'order')
+    fields = ('label', 'slug', 'url', 'order')
     ordering = ('order',)
 
 
@@ -108,8 +109,48 @@ class FooterSectionAdmin(admin.ModelAdmin):
 
 @admin.register(FooterLink)
 class FooterLinkAdmin(admin.ModelAdmin):
-    list_display = ('label', 'section', 'order', 'created_at')
+    list_display = ('label', 'section', 'slug', 'order', 'created_at')
     list_filter = ('section',)
-    search_fields = ('label', 'url')
+    search_fields = ('label', 'url', 'slug')
     readonly_fields = ('created_at',)
     ordering = ('section', 'order')
+
+
+class AboutImageInline(admin.TabularInline):
+    model = AboutImage
+    extra = 1
+    fields = ('image', 'caption', 'order')
+
+
+class CampusInline(admin.StackedInline):
+    model = Campus
+    extra = 1
+    fields = ('name', 'description', 'image', 'order')
+
+
+class StatisticInline(admin.TabularInline):
+    model = Statistic
+    extra = 1
+    fields = ('label', 'value', 'order')
+
+
+@admin.register(AboutOverview)
+class AboutOverviewAdmin(admin.ModelAdmin):
+    list_display = ('section', 'created_at')
+    readonly_fields = ('created_at', 'updated_at')
+    inlines = [AboutImageInline, CampusInline, StatisticInline]
+    fieldsets = (
+        ('Content', {'fields': ('section', 'brief', 'content', 'statistics')}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )
+
+
+@admin.register(AboutSection)
+class AboutSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'order', 'created_at')
+    search_fields = ('title', 'slug')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Section', {'fields': ('title', 'slug', 'order')}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )

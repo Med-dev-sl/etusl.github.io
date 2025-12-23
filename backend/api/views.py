@@ -3,8 +3,38 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection, FooterSection, FooterLink
-from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer, FacultySerializer, NewsSerializer, StrategicPlanSerializer, StrategicPlanSectionSerializer, FooterSectionSerializer, FooterLinkSerializer
+from .models import (
+    Announcement,
+    Event,
+    AboutUniversity,
+    Faculty,
+    News,
+    StrategicPlan,
+    StrategicPlanSection,
+    FooterSection,
+    FooterLink,
+    AboutSection,
+    AboutOverview,
+    AboutImage,
+    Campus,
+    Statistic,
+)
+from .serializers import (
+    AnnouncementSerializer,
+    EventSerializer,
+    AboutUniversitySerializer,
+    FacultySerializer,
+    NewsSerializer,
+    StrategicPlanSerializer,
+    StrategicPlanSectionSerializer,
+    FooterSectionSerializer,
+    FooterLinkSerializer,
+    AboutSectionSerializer,
+    AboutOverviewSerializer,
+    AboutImageSerializer,
+    CampusSerializer,
+    StatisticSerializer,
+)
 
 
 def status(request):
@@ -80,4 +110,34 @@ class FooterLinkViewSet(viewsets.ModelViewSet):
     """API endpoint for footer links — allows admin to manage links directly if needed."""
     queryset = FooterLink.objects.all()
     serializer_class = FooterLinkSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AboutSectionViewSet(viewsets.ModelViewSet):
+    queryset = AboutSection.objects.all()
+    serializer_class = AboutSectionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AboutOverviewViewSet(viewsets.ModelViewSet):
+    queryset = AboutOverview.objects.all()
+    serializer_class = AboutOverviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AboutImageViewSet(viewsets.ModelViewSet):
+    queryset = AboutImage.objects.all()
+    serializer_class = AboutImageSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class CampusViewSet(viewsets.ModelViewSet):
+    queryset = Campus.objects.all()
+    serializer_class = CampusSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class StatisticViewSet(viewsets.ModelViewSet):
+    queryset = Statistic.objects.all()
+    serializer_class = StatisticSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

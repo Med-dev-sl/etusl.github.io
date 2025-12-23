@@ -144,7 +144,9 @@ class FooterLink(models.Model):
     """A link within a footer section."""
     section = models.ForeignKey(FooterSection, related_name='links', on_delete=models.CASCADE)
     label = models.CharField(max_length=255)
-    url = models.URLField()
+    url = models.URLField(blank=True, null=True)
+    # optional slug for internal pages (e.g. 'engineering-innovation')
+    slug = models.SlugField(max_length=200, blank=True)
     order = models.PositiveIntegerField(default=0, help_text='Lower numbers appear first')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -155,3 +157,95 @@ class FooterLink(models.Model):
 
     def __str__(self):
         return f"{self.section.title} — {self.label}"
+
+    def get_target(self):
+        """Return the preferred target URL for the link: slug => '/{slug}', else url."""
+        if self.slug:
+            # use root-level slug path for internal pages
+            return f"/{self.slug.strip('/') }"
+        return self.url or '#'
+
+
+class AboutSection(models.Model):
+    """A logical section on the About pages (e.g. Overview, History, Mission)."""
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=200, unique=True)
+    order = models.PositiveIntegerField(default=0, help_text='Lower numbers appear first')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'About Section'
+        verbose_name_plural = 'About Sections'
+
+    def __str__(self):
+        return self.title
+
+
+class AboutOverview(models.Model):
+    """The editable overview content for the About page.
+
+    Admins can provide a short/brief description, additional rich content,
+    and attach images, campus entries and statistic entries.
+    """
+    section = models.OneToOneField(AboutSection, related_name='overview', on_delete=models.CASCADE)
+    brief = models.TextField(blank=True, help_text='Short brief about the university')
+    content = models.TextField(blank=True, help_text='Longer content or rich text (HTML allowed)')
+    # JSON field to store key/value statistics (e.g. {"students": 1200, "staff": 150})
+    statistics = models.JSONField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'About Overview'
+        verbose_name_plural = 'About Overviews'
+
+    def __str__(self):
+        return f"Overview — {self.section.title}"
+
+
+class AboutImage(models.Model):
+    about = models.ForeignKey(AboutOverview, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='about/images/%Y/%m/%d/', blank=True, null=True)
+    caption = models.CharField(max_length=255, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'About Image'
+        verbose_name_plural = 'About Images'
+
+    def __str__(self):
+        return self.caption or (self.image.name if self.image else 'About Image')
+
+
+class Campus(models.Model):
+    about = models.ForeignKey(AboutOverview, related_name='campuses', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='about/campuses/%Y/%m/%d/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'name']
+        verbose_name = 'Campus'
+        verbose_name_plural = 'Campuses'
+
+    def __str__(self):
+        return self.name
+
+
+class Statistic(models.Model):
+    about = models.ForeignKey(AboutOverview, related_name='stat_items', on_delete=models.CASCADE)
+    label = models.CharField(max_length=120)
+    value = models.CharField(max_length=120)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'About Statistic'
+        verbose_name_plural = 'About Statistics'
+
+    def __str__(self):
+        return f"{self.label}: {self.value}"

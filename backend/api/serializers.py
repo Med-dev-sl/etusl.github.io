@@ -1,5 +1,20 @@
 from rest_framework import serializers
-from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection, FooterSection, FooterLink
+from .models import (
+    Announcement,
+    Event,
+    AboutUniversity,
+    Faculty,
+    News,
+    StrategicPlan,
+    StrategicPlanSection,
+    FooterSection,
+    FooterLink,
+    AboutSection,
+    AboutOverview,
+    AboutImage,
+    Campus,
+    Statistic,
+)
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
@@ -54,7 +69,7 @@ class StrategicPlanSerializer(serializers.ModelSerializer):
 class FooterLinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = FooterLink
-        fields = ['id', 'label', 'url', 'order', 'created_at']
+        fields = ['id', 'label', 'slug', 'url', 'order', 'created_at']
         read_only_fields = ['id', 'created_at']
 
 
@@ -64,4 +79,45 @@ class FooterSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FooterSection
         fields = ['id', 'title', 'links', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class AboutImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutImage
+        fields = ['id', 'about', 'image', 'caption', 'order']
+        read_only_fields = ['id']
+
+
+class CampusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Campus
+        fields = ['id', 'about', 'name', 'description', 'image', 'order']
+        read_only_fields = ['id']
+
+
+class StatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Statistic
+        fields = ['id', 'about', 'label', 'value', 'order']
+        read_only_fields = ['id']
+
+
+class AboutOverviewSerializer(serializers.ModelSerializer):
+    images = AboutImageSerializer(many=True, read_only=True)
+    campuses = CampusSerializer(many=True, read_only=True)
+    stat_items = StatisticSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = AboutOverview
+        fields = ['id', 'section', 'brief', 'content', 'statistics', 'images', 'campuses', 'stat_items', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class AboutSectionSerializer(serializers.ModelSerializer):
+    overview = AboutOverviewSerializer(read_only=True)
+
+    class Meta:
+        model = AboutSection
+        fields = ['id', 'title', 'slug', 'order', 'overview', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
