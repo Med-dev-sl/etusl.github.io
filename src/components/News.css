@@ -1,0 +1,170 @@
+.news-section {
+  margin: 36px auto 80px;
+  max-width: 1200px;
+  padding: 12px 24px;
+  font-family: 'Lato', 'Open Sans', sans-serif;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+.news-featured {
+  background: #fff;
+  border: 1px solid rgba(6,42,111,0.04);
+  box-shadow: 0 10px 30px rgba(6,42,111,0.04);
+  padding: 18px;
+}
+
+.news-featured__image {
+  width: 100%;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 14px;
+}
+
+.news-featured__date {
+  display: block;
+  color: #9aa4b2;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.news-featured__title {
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+  font-size: 32px;
+  color: #062a6f;
+  margin: 0 0 12px 0;
+  font-weight: 800;
+}
+
+.news-featured__excerpt {
+  color: #374151;
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+.news-side {
+  background: transparent;
+}
+
+.news-side__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.news-side__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0b2b5b;
+  margin: 0;
+}
+
+.news-side__cta {
+  background: #0b4a8a;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.news-list-item {
+  padding: 12px 0;
+}
+
+.news-list-item__title {
+  font-size: 18px;
+  margin: 0 0 8px 0;
+  color: #062a6f;
+  font-weight: 700;
+}
+
+.news-list-item__excerpt {
+  color: #505f73;
+  margin: 0 0 10px 0;
+  font-size: 15px;
+}
+
+.news-list-item__date {
+  color: #9aa4b2;
+  font-size: 13px;
+}
+
+@media (max-width: 980px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+  .news-featured__image {
+    height: 320px;
+  }
+}
+
+/* Strategic Plan hero (full-width under news) */
+.strategic-hero {
+  position: relative;
+  margin: 32px 0 56px 0;
+  border-radius: 2px;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strategic-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.95) contrast(0.95);
+  transform: scale(1.02);
+}
+
+.strategic-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,42,111,0.55) 0%, rgba(6,42,111,0.45) 100%);
+}
+
+.strategic-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  text-align: center;
+  padding: 44px 20px;
+  color: #fff;
+}
+
+.strategic-hero__title {
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+  font-size: 32px;
+  margin: 0 0 10px 0;
+  font-weight: 800;
+}
+
+.strategic-hero__subtitle {
+  font-size: 16px;
+  margin: 0 0 18px 0;
+  color: rgba(255,255,255,0.9);
+}
+
+.strategic-hero__cta {
+  display: inline-block;
+  background: rgba(255, 215, 130, 0.95);
+  color: #062a6f;
+  padding: 12px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .strategic-hero__title { font-size: 22px; }
+  .strategic-hero__subtitle { font-size: 14px; }
+}

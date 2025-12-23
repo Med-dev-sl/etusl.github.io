@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Hero.css';
 import About from './About';
 import Faculty from './Faculty';
+import News from './News';
 
 function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -36,6 +37,29 @@ function Hero() {
       .catch(() => mounted && setEvents([]));
     return () => { mounted = false; };
   }, []);
+
+  // reveal event cards when they enter the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    const cards = document.querySelectorAll('.event-card');
+    cards.forEach((c) => {
+      // ensure initial state
+      c.classList.remove('in-view');
+      observer.observe(c);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [events]);
 
   const formatDate = (isoOrDate) => {
     if (!isoOrDate) return '';
@@ -105,6 +129,7 @@ function Hero() {
           ))}
         </div>
       </section>
+      <News />
     </>
   );
 }

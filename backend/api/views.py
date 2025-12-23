@@ -3,8 +3,8 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Announcement, Event, AboutUniversity, Faculty
-from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer, FacultySerializer
+from .models import Announcement, Event, AboutUniversity, Faculty, News, StrategicPlan, StrategicPlanSection
+from .serializers import AnnouncementSerializer, EventSerializer, AboutUniversitySerializer, FacultySerializer, NewsSerializer, StrategicPlanSerializer, StrategicPlanSectionSerializer
 
 
 def status(request):
@@ -45,4 +45,25 @@ class FacultyViewSet(viewsets.ModelViewSet):
     """API endpoint for faculties."""
     queryset = Faculty.objects.all()
     serializer_class = FacultySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class NewsViewSet(viewsets.ModelViewSet):
+    """API endpoint for News items."""
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class StrategicPlanViewSet(viewsets.ModelViewSet):
+    """API endpoint for Strategic Plans. Sections are nested read-only via serializer."""
+    queryset = StrategicPlan.objects.all()
+    serializer_class = StrategicPlanSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class StrategicPlanSectionViewSet(viewsets.ModelViewSet):
+    """API endpoint for sections — allows admin to create/edit sections directly if needed."""
+    queryset = StrategicPlanSection.objects.all()
+    serializer_class = StrategicPlanSectionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

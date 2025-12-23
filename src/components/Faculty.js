@@ -36,6 +36,7 @@ function pickIconType(name) {
 export default function Faculty() {
   const [faculties, setFaculties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -59,18 +60,66 @@ export default function Faculty() {
   if (loading) return null;
   if (!faculties || faculties.length === 0) return null;
 
+  const toggleSelected = (id) => {
+    setSelectedId((prev) => (prev === id ? null : id));
+  };
+
+  const onTabKeyDown = (e, idx) => {
+    if (!faculties || faculties.length === 0) return;
+    if (e.key === 'ArrowRight') {
+      const next = (idx + 1) % faculties.length;
+      setSelectedId(faculties[next].id);
+      e.preventDefault();
+    } else if (e.key === 'ArrowLeft') {
+      const prev = (idx - 1 + faculties.length) % faculties.length;
+      setSelectedId(faculties[prev].id);
+      e.preventDefault();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      toggleSelected(faculties[idx].id);
+      e.preventDefault();
+    }
+  };
+
   return (
     <section className="faculty-section" aria-label="Faculties">
-      <h3 className="faculty-section-title">Faculties</h3>
+      <h3 className="faculty-section-title">Faculties to pursue your pasion</h3>
+      <p className="faculty-subtitle">Explore our faculties and discover programmes designed to develop your skills and career.</p>
+
+      <div className="faculty-names" role="tablist" aria-label="Faculty names">
+        {faculties.map((f, idx) => (
+          <button
+            key={`tab-${f.id}`}
+            className={`faculty-name-tab ${selectedId === f.id ? 'active' : ''}`}
+            onClick={() => toggleSelected(f.id)}
+            onKeyDown={(e) => onTabKeyDown(e, idx)}
+            aria-pressed={selectedId === f.id}
+            aria-controls={`faculty-card-${f.id}`}
+            tabIndex={0}
+          >
+            {f.name}
+          </button>
+        ))}
+      </div>
+
       <div className="faculty-grid">
         {faculties.map((f) => (
-          <div className="faculty-card" key={f.id}>
-            <div className="faculty-card-icon">
-              <Icon type={pickIconType(f.name)} />
-            </div>
-            <div className="faculty-card-body">
-              <h4 className="faculty-name">{f.name}</h4>
-              <p className="faculty-desc">{f.description ? (f.description.length > 160 ? `${f.description.slice(0,157)}…` : f.description) : ''}</p>
+          <div id={`faculty-card-${f.id}`} className={`faculty-card ${selectedId === f.id ? 'flipped' : ''}`} key={f.id}>
+            <div className="faculty-card-inner">
+              <div className="faculty-card-front">
+                <div className="faculty-card-icon">
+                  <Icon type={pickIconType(f.name)} />
+                </div>
+                <div className="faculty-card-body">
+                  <h4 className="faculty-name">{f.name}</h4>
+                </div>
+              </div>
+
+              <div className="faculty-card-back" aria-hidden={selectedId === f.id ? 'false' : 'true'}>
+                <div className="faculty-back-content">
+                  <h4 className="faculty-name back">{f.name}</h4>
+                  <p className="faculty-desc back">{f.description ? (f.description) : 'No description available.'}</p>
+                </div>
+              </div>
             </div>
           </div>
         ))}
