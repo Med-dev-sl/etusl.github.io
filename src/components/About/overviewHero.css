@@ -1,0 +1,60 @@
+/* Hero styles for About Overview: supports variants 'standard' and 'unique' */
+.overview-hero {
+  width: 100%;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #fff;
+}
+
+.overview-hero-overlay {
+  background: rgba(0, 0, 0, 0.35);
+  width: 100%;
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 20px;
+}
+
+.hero-title {
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  line-height: 1.05;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.hero-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.95;
+  max-width: 75%;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+}
+
+/* Standard: centered text, slightly shorter */
+.overview-hero--standard { min-height: 300px; }
+.overview-hero--standard .overview-hero-overlay { justify-content: center; }
+.overview-hero--standard .hero-content { text-align: center; }
+
+/* Unique: left aligned, stronger gradient overlay and larger height */
+.overview-hero--unique { min-height: 420px; }
+.overview-hero--unique .overview-hero-overlay { background: linear-gradient(90deg, rgba(5,12,34,0.75) 0%, rgba(0,0,0,0.45) 50%, rgba(5,12,34,0.5) 100%); justify-content: flex-start; }
+.overview-hero--unique .hero-content { text-align: left; padding-left: 36px; }
+
+/* Make sure hero text is readable on small screens */
+@media (max-width: 640px) {
+  .overview-hero { min-height: 220px; }
+  .overview-hero-overlay { padding: 12px 0; }
+  .hero-subtitle { max-width: 100%; font-size: 0.95rem; }
+  .overview-hero--unique .hero-content { padding-left: 18px; }
+}
