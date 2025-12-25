@@ -11,6 +11,11 @@ import AboutLeadership from './pages/AboutLeadership';
 import AboutAffiliates from './pages/AboutAffiliates';
 import AboutStrategicPlan from './pages/AboutStrategicPlan';
 import AboutPolicies from './pages/AboutPolicies';
+import AcademicsOverview from './pages/AcademicsOverview';
+import Faculties from './pages/Faculties';
+import Programmes from './pages/Programmes';
+import AcademicCalendar from './pages/AcademicCalendar';
+import Library from './pages/Library';
 
 function App() {
   return (
@@ -26,6 +31,11 @@ function App() {
         <Route path="/about/affiliates" element={<AboutAffiliates />} />
         <Route path="/about/strategic-plan" element={<AboutStrategicPlan />} />
         <Route path="/about/policies" element={<AboutPolicies />} />
+        <Route path="/academics/overview" element={<AcademicsOverview />} />
+        <Route path="/academics/faculties" element={<Faculties />} />
+        <Route path="/academics/programmes" element={<Programmes />} />
+        <Route path="/academics/calendar" element={<AcademicCalendar />} />
+        <Route path="/academics/library" element={<Library />} />
       </Routes>
       <Footer />
     </BrowserRouter>

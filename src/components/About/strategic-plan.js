@@ -1,22 +1,21 @@
 import React from 'react';
 import '../About.css';
+import StrategicPlanContent from './StrategicPlanContent';
 
 export default function StrategicPlan() {
 	return (
-		<section className="about-section" aria-label="Strategic Plan">
-			<div className="about-container">
-				<div className="about-content">
-					<header className="about-header">
-						<h2 className="about-title">Strategic Plan</h2>
-					</header>
-					<div className="about-description">
-						<p>
-							Placeholder for the strategic plan overview. Replace with the dynamic strategic plan component when ready.
-						</p>
-					</div>
+		<main>
+			<section className="about-section strategic-hero" aria-label="Strategic Plan">
+				<div className="strategic-hero__bg" />
+				<div className="strategic-hero__overlay" />
+				<div className="strategic-hero__caption">
+					<h1 className="hero-title">2018-2025 <strong>STRATEGIC PLAN</strong></h1>
+					<p className="hero-subtitle">WHAT MUST BE DONE</p>
 				</div>
-			</div>
-		</section>
+			</section>
+
+			<StrategicPlanContent />
+		</main>
 	);
 }
 

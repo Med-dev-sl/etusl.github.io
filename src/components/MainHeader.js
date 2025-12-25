@@ -54,13 +54,13 @@ function MainHeader() {
             </li>
 
             <li className="menu__item menu__item--has-dropdown">
-              <a href="#">Academics</a>
+              <span>Academics</span>
               <ul className="dropdown">
-                <li><a href="#">Overview</a></li>
-                <li><a href="#">Faculties</a></li>
-                <li><a href="#">Programmes</a></li>
-                <li><a href="#">Academic Calendar</a></li>
-                <li><a href="#">Library</a></li>
+                <li><Link to="/academics/overview">Overview</Link></li>
+                <li><Link to="/academics/faculties">Faculties</Link></li>
+                <li><Link to="/academics/programmes">Programmes</Link></li>
+                <li><Link to="/academics/calendar">Academic Calendar</Link></li>
+                <li><Link to="/academics/library">Library</Link></li>
               </ul>
             </li>
 
@@ -114,7 +114,7 @@ function MainHeader() {
             <ul className="mobile-menu">
               <li><Link to="/" onClick={() => setMobileOpen(false)}>Home</Link></li>
               <li><Link to="/about/overview" onClick={() => setMobileOpen(false)}>About</Link></li>
-              <li><a href="#" onClick={() => setMobileOpen(false)}>Academics</a></li>
+              <li><Link to="/academics/overview" onClick={() => setMobileOpen(false)}>Academics</Link></li>
               <li><a href="#" onClick={() => setMobileOpen(false)}>Admissions</a></li>
               <li className="mobile-menu__logo"><img src="logo512.png" alt="" className="logo-image"/></li>
               <li><a href="#" onClick={() => setMobileOpen(false)}>Research</a></li>

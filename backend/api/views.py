@@ -18,6 +18,20 @@ from .models import (
     AboutImage,
     Campus,
     Statistic,
+    AboutHistory,
+    HistoryEvent,
+    HistoryImage,
+    VisionMission,
+    CoreValue,
+    StrategicPriority,
+    PriorityItem,
+    Affiliate,
+    PolicyDocument,
+    LeaderPosition,
+    Leader,
+    AcademicStatistic,
+    AdmissionType,
+    AcademicPage,
 )
 from .serializers import (
     AnnouncementSerializer,
@@ -34,7 +48,30 @@ from .serializers import (
     AboutImageSerializer,
     CampusSerializer,
     StatisticSerializer,
+    AboutHistorySerializer,
+    HistoryEventSerializer,
+    HistoryImageSerializer,
+    VisionMissionSerializer,
+    CoreValueSerializer,
+    StrategicPrioritySerializer,
+    PriorityItemSerializer,
+    AffiliateSerializer,
+    PolicyDocumentSerializer,
+    LeaderPositionSerializer,
+    LeaderSerializer,
+    AcademicStatisticSerializer,
+    AdmissionTypeSerializer,
+    AcademicPageSerializer,
 )
+
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """Custom permission to allow leaders to edit only their own profile."""
+    
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.user == request.user or request.user.is_staff
 
 
 def status(request):
@@ -141,3 +178,121 @@ class StatisticViewSet(viewsets.ModelViewSet):
     queryset = Statistic.objects.all()
     serializer_class = StatisticSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AboutHistoryViewSet(viewsets.ModelViewSet):
+    """API endpoint for university history with events and images."""
+    queryset = AboutHistory.objects.all()
+    serializer_class = AboutHistorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class HistoryEventViewSet(viewsets.ModelViewSet):
+    """API endpoint for history events/milestones."""
+    queryset = HistoryEvent.objects.all()
+    serializer_class = HistoryEventSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class HistoryImageViewSet(viewsets.ModelViewSet):
+    """API endpoint for history images (gallery)."""
+    queryset = HistoryImage.objects.all()
+    serializer_class = HistoryImageSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class VisionMissionViewSet(viewsets.ModelViewSet):
+    """API endpoint for vision and mission statements."""
+    queryset = VisionMission.objects.all()
+    serializer_class = VisionMissionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class CoreValueViewSet(viewsets.ModelViewSet):
+    """API endpoint for core values."""
+    queryset = CoreValue.objects.all()
+    serializer_class = CoreValueSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class StrategicPriorityViewSet(viewsets.ModelViewSet):
+    """API endpoint for strategic priorities with items."""
+    queryset = StrategicPriority.objects.all()
+    serializer_class = StrategicPrioritySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class PriorityItemViewSet(viewsets.ModelViewSet):
+    """API endpoint for priority items."""
+    queryset = PriorityItem.objects.all()
+    serializer_class = PriorityItemSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AffiliateViewSet(viewsets.ModelViewSet):
+    """API endpoint for affiliated institutions."""
+    queryset = Affiliate.objects.all()
+    serializer_class = AffiliateSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class PolicyDocumentViewSet(viewsets.ModelViewSet):
+    """API endpoint for policy documents (file upload/download)."""
+    queryset = PolicyDocument.objects.all()
+    serializer_class = PolicyDocumentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class PolicyDocumentViewSet(viewsets.ModelViewSet):
+    """API endpoint for policy documents (file upload/download)."""
+    queryset = PolicyDocument.objects.all()
+    serializer_class = PolicyDocumentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class LeaderPositionViewSet(viewsets.ModelViewSet):
+    """API endpoint for leader positions."""
+    queryset = LeaderPosition.objects.all()
+    serializer_class = LeaderPositionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class LeaderViewSet(viewsets.ModelViewSet):
+    """API endpoint for university leaders with permission control."""
+    queryset = Leader.objects.all()
+    serializer_class = LeaderSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
+    def get_queryset(self):
+        """Return all leaders (leaders can only edit their own)."""
+        return Leader.objects.all()
+
+
+class AcademicStatisticViewSet(viewsets.ModelViewSet):
+    """API endpoint for academic statistics."""
+    queryset = AcademicStatistic.objects.all()
+    serializer_class = AcademicStatisticSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AdmissionTypeViewSet(viewsets.ModelViewSet):
+    """API endpoint for admission types."""
+    queryset = AdmissionType.objects.filter(active=True)
+    serializer_class = AdmissionTypeSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AcademicPageViewSet(viewsets.ModelViewSet):
+    """API endpoint for academic page content."""
+    queryset = AcademicPage.objects.all()
+    serializer_class = AcademicPageSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    @action(detail=False, methods=['get'])
+    def current(self, request):
+        """Return the current/first academic page"""
+        page = AcademicPage.objects.first()
+        if page:
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+        return Response({'error': 'No academic page configured'}, status=404)

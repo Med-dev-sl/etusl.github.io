@@ -14,7 +14,43 @@ from .models import (
     AboutImage,
     Campus,
     Statistic,
+    AboutHistory,
+    HistoryEvent,
+    HistoryImage,
+    VisionMission,
+    CoreValue,
+    StrategicPriority,
+    PriorityItem,
+    Affiliate,
+    PolicyDocument,
+    LeaderPosition,
+    Leader,
+    AcademicStatistic,
+    AdmissionType,
+    AcademicPage,
 )
+
+
+class AffiliateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Affiliate
+        fields = ['id', 'name', 'short_description', 'description', 'website', 'contact_email', 'contact_phone', 'address', 'featured_image', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class PolicyDocumentSerializer(serializers.ModelSerializer):
+    file_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PolicyDocument
+        fields = ['id', 'title', 'short_description', 'file', 'file_url', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+    def get_file_url(self, obj):
+        request = self.context.get('request')
+        if obj.file:
+            return request.build_absolute_uri(obj.file.url) if request is not None else obj.file.url
+        return None
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
@@ -53,7 +89,7 @@ class NewsSerializer(serializers.ModelSerializer):
 class StrategicPlanSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StrategicPlanSection
-        fields = ['id', 'plan', 'heading', 'content', 'image', 'order', 'created_at']
+        fields = ['id', 'plan', 'heading', 'subheading', 'section_type', 'content', 'items', 'image', 'order', 'created_at']
         read_only_fields = ['id', 'created_at']
 
 
@@ -120,4 +156,104 @@ class AboutSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = AboutSection
         fields = ['id', 'title', 'slug', 'order', 'overview', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class HistoryEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HistoryEvent
+        fields = ['id', 'history', 'year', 'title', 'name', 'description', 'order', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+class HistoryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HistoryImage
+        fields = ['id', 'history', 'image', 'caption', 'year', 'order', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+class AboutHistorySerializer(serializers.ModelSerializer):
+    events = HistoryEventSerializer(many=True, read_only=True)
+    images = HistoryImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = AboutHistory
+        fields = ['id', 'title', 'subtitle', 'image', 'content', 'events', 'images', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class PriorityItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PriorityItem
+        fields = ['id', 'priority', 'text', 'order', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+class StrategicPrioritySerializer(serializers.ModelSerializer):
+    items = PriorityItemSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = StrategicPriority
+        fields = ['id', 'title', 'featured_image', 'image_alt', 'items', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class CoreValueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CoreValue
+        fields = ['id', 'title', 'description', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class VisionMissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VisionMission
+        fields = ['id', 'vision_title', 'vision_text', 'mission_title', 'mission_text', 'featured_image', 'image_alt', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class LeaderPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaderPosition
+        fields = ['id', 'title', 'hierarchy_level', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class LeaderSerializer(serializers.ModelSerializer):
+    position_title = serializers.CharField(source='position.title', read_only=True)
+    position_level = serializers.IntegerField(source='position.hierarchy_level', read_only=True)
+
+    class Meta:
+        model = Leader
+        fields = ['id', 'user', 'position', 'position_title', 'position_level', 'name', 'photo', 'bio', 'email', 'phone', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class AcademicStatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AcademicStatistic
+        fields = ['id', 'statistic_type', 'value', 'label', 'order', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class AdmissionTypeSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AdmissionType
+        fields = ['id', 'category', 'title', 'description', 'image', 'image_url', 'link_url', 'order', 'active', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url) if request is not None else obj.image.url
+        return None
+
+
+class AcademicPageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AcademicPage
+        fields = ['id', 'page_title', 'hero_subtitle', 'overview_title', 'overview_description', 'nurture_title', 'nurture_description', 'study_with_us_link', 'student_handbook_link', 'academic_calendar_link', 'academic_calendar_title', 'academic_calendar_description', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']

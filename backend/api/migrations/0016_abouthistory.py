@@ -4,7 +4,7 @@ from django.db import migrations, models
 def create_sample_about_history(apps, schema_editor):
     AboutHistory = apps.get_model('api', 'AboutHistory')
     AboutHistory.objects.create(
-        title='The History of the University of Ghana',
+        title='The History of the Eastern Technical University',
         subtitle='',
         content=(
             "UNIVERSITY OF GHANA was founded in 1948 as the University College of the Gold Coast on the "

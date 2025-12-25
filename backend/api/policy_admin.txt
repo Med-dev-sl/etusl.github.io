@@ -1,0 +1,17 @@
+@admin.register(PolicyDocument)
+class PolicyDocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'file_name', 'created_at')
+    search_fields = ('title', 'short_description')
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ('order', 'title')
+    fieldsets = (
+        ('Content', {'fields': ('title', 'short_description', 'file')}),
+        ('Display', {'fields': ('order',)}),
+        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
+    )
+
+    def file_name(self, obj):
+        if obj.file:
+            return obj.file.name.split('/')[-1]
+        return 'No file'
+    file_name.short_description = 'File'
